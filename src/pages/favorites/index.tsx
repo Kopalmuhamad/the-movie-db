@@ -4,12 +4,13 @@ import { getAccountDetails, getFavoriteMovies } from '@/services/apis/auth';
 import MovieCard from '@/components/moleculs/movie-card';
 import { IMovie, IUser } from '@/services/apis/interface';
 import toast from 'react-hot-toast';
+import { Skeleton } from '@/components/atom/skeleton';
 
 const FavoritePage = () => {
     const [account, setAccount] = useState<IUser | null>(null);
     const [favoriteMovies, setFavoriteMovies] = useState<IMovie[]>([]);
     const [loading, setLoading] = useState(true);
-    const sessionId = localStorage.getItem('session_id'); // Ambil session_id dari localStorage
+    const sessionId = localStorage.getItem('session_id');
 
     useEffect(() => {
         const fetchAccountDetails = async () => {
@@ -27,7 +28,6 @@ const FavoritePage = () => {
                     setLoading(false);
                 }
             } else {
-                // Jika tidak ada session_id
                 setLoading(false);
             }
         };
@@ -36,7 +36,15 @@ const FavoritePage = () => {
     }, [sessionId]);
 
     if (loading) {
-        return <div>Loading...</div>; // Loader saat data sedang diambil
+        return (
+            <div className="container mx-auto pt-20 space-y-10">
+                {/* Use the Skeleton component while loading */}
+                <Skeleton className="h-8 w-1/2" />
+                <Skeleton className="h-6 w-1/4" />
+                <Skeleton className="h-6 w-full" />
+                <Skeleton className="h-10 w-full" />
+            </div>
+        ); // Loader saat data sedang diambil
     }
 
     return (
@@ -44,7 +52,6 @@ const FavoritePage = () => {
             <section className='container mx-auto pt-20'>
                 <div>
                     <h2 className='text-xl'>
-                        {/* Tampilkan nama account jika session_id ada, jika tidak tampilkan As guest */}
                         <span>Welcome</span>, <span className='font-semibold'>{account ? account.username : "As guest"}!</span>
                     </h2>
                     {account && <p>Your Account ID: <span className='font-semibold'>{account.id}</span></p>}
@@ -55,11 +62,10 @@ const FavoritePage = () => {
                     <h1 className='text-3xl font-bebas'>A List of Your Favorite Movies</h1>
                 </header>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* Render daftar film favorit */}
                     {favoriteMovies.length > 0 ? (
                         favoriteMovies.map((movie) => (
                             <MovieCard
-                                key={movie.id} // Tambahkan key di sini untuk mencegah warning React
+                                key={movie.id}
                                 movie={movie}
                                 accountId={account?.id}
                                 sessionId={sessionId || ''}

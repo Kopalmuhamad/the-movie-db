@@ -4,6 +4,10 @@ export default {
   content: ["./src/**/*.{html,js,ts,tsx,jsx}"],
   theme: {
     extend: {
+      container: {
+        center: true,
+        padding: "8px"
+      },
       screens: {
         xxs: "375px",
         xs: "520px",

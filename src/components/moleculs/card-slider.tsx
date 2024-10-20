@@ -16,8 +16,8 @@ const CardSlider = ({ children }: IProps) => {
             <CarouselContent>
                 {children}
             </CarouselContent>
-            <CarouselPrevious className="hidden lg:flex" />
-            <CarouselNext className="hidden lg:flex" />
+            <CarouselPrevious className="hidden" />
+            <CarouselNext className="hidden" />
         </Carousel>
     )
 }
