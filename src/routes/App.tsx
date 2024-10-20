@@ -5,7 +5,6 @@ import { ThemeProvider } from '../providers/theme-provider'
 import LoginPage from '../pages/login'
 import FavoritePage from '../pages/favorites'
 import ProtectedRoute from './protected-route'
-import SearchResults from '@/pages/search-results'
 
 const App = () => {
 
@@ -27,14 +26,6 @@ const App = () => {
       element: (
         <ProtectedRoute>
           <FavoritePage />
-        </ProtectedRoute>
-      )
-    },
-    {
-      path: '/movie/search',
-      element: (
-        <ProtectedRoute>
-          <SearchResults />
         </ProtectedRoute>
       )
     }
