@@ -4,14 +4,12 @@ import { Button } from "../atom/button";
 import { Search, SearchIcon } from "lucide-react";
 import { useAtom } from "jotai";
 import { searchQuery, isSearchOpenAtom } from "@/services/atom/atom";
-import { useNavigate } from "react-router-dom";
 
 const SearchInput = () => {
     const searchRef = useRef<HTMLDivElement>(null);
     const [query, setQuery] = useAtom(searchQuery);
     const [isSearchOpen, setIsSearchOpen] = useAtom(isSearchOpenAtom);
 
-    const navigate = useNavigate();
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -32,14 +30,14 @@ const SearchInput = () => {
     }, [isSearchOpen]);
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.trim(); // Remove extra spaces
-        setQuery(value); // Update query atom
+        const value = e.target.value.trim();
+        setQuery(value);
 
-        setIsSearchOpen(true); // Set search input open
+        setIsSearchOpen(true);
         if (value === "") {
-            navigate("/"); // Redirect to homepage if input is empty
+            setIsSearchOpen(false)
         } else {
-            navigate("/movie/search"); // Redirect to search page if input is not empty
+            setIsSearchOpen(true)
         }
     };
 
