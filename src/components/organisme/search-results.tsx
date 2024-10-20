@@ -3,7 +3,6 @@ import { searchMovie } from "@/services/apis/movies";
 import { isSearchOpenAtom, searchQuery } from "@/services/atom/atom";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 const SearchResults = () => {
     const [query] = useAtom(searchQuery);
@@ -21,13 +20,9 @@ const SearchResults = () => {
             try {
                 const data = await searchMovie(query);
                 setMovies(data.results);
-                if (data.results.length === 0) {
-                    toast.error("No movies found");
-                }
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
             } catch (err) {
                 setError("Failed to fetch movies");
-                toast.error("Failed to fetch movies");
             } finally {
                 setLoading(false); // Ensure loading is set to false
             }
@@ -48,7 +43,7 @@ const SearchResults = () => {
                 {error && <p className="text-red-500">{error}</p>}
                 {!loading && !error && (
                     <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {movies.map((movie) => (
+                        {movies.length == 0 ? <p>No movies found</p> : movies.map((movie) => (
                             <li key={movie.id} className="p-4 border rounded-md">
                                 <img
                                     src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}

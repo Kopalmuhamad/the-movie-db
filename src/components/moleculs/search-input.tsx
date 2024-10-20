@@ -30,7 +30,7 @@ const SearchInput = () => {
     }, [isSearchOpen]);
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.trim();
+        const value = e.target.value;
         setQuery(value);
 
         setIsSearchOpen(true);
