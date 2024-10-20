@@ -10,6 +10,7 @@ import { useAtom } from "jotai";
 import { isSearchOpenAtom } from "@/services/atom/atom";
 import SearchResults from "@/components/organisme/search-results";
 import { Skeleton } from "@/components/atom/skeleton";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
     const [nowPlayingMovies, setNowPlayingMovies] = useState<IMovie[]>([]);
@@ -45,14 +46,14 @@ const HomePage = () => {
             const data = await Promise.all(
                 pages.map((page) => fetchPopularMovies(page))
             );
-    
+
             const combinedResults = data.flatMap((response) => response.results);
-    
+
             const uniqueMovies = combinedResults.filter(
                 (movie, index, self) =>
                     index === self.findIndex((m) => m.id === movie.id)
             );
-    
+
             setPopularMovies((prev) => {
                 const combinedMovies = [...prev, ...uniqueMovies];
                 return combinedMovies.filter(
@@ -60,15 +61,15 @@ const HomePage = () => {
                         index === self.findIndex((m) => m.id === movie.id)
                 );
             });
-    
-            setTotalMoviesFetched((prev) => prev + uniqueMovies.length); // Update total jumlah film yang di-fetch
+
+            setTotalMoviesFetched((prev) => prev + uniqueMovies.length);
         } catch (error) {
             console.error("Error fetching popular movies:", error);
         } finally {
             setLoadingPopular(false);
         }
     };
-    
+
 
     useEffect(() => {
         getPopularMovies([1]);
@@ -76,9 +77,9 @@ const HomePage = () => {
 
     const loadMoreMovies = async () => {
         const nextPage = Math.ceil(totalMoviesFetched / 20) + 1;
-        await getPopularMovies([nextPage]); 
+        await getPopularMovies([nextPage]);
 
-        setLimitPopularMovies((prev) => Math.min(prev + 6, MAX_MOVIES_DISPLAYED)); 
+        setLimitPopularMovies((prev) => Math.min(prev + 6, MAX_MOVIES_DISPLAYED));
     };
 
     return (
@@ -101,7 +102,9 @@ const HomePage = () => {
                             ) : (
                                 limitNowPlayingMovies.map((movie) => (
                                     <CarouselItem className="basis-1/1 cursor-pointer" key={movie.id}>
-                                        <MovieCard movie={movie} />
+                                        <Link to={`/movie/${movie.id}`}>
+                                            <MovieCard movie={movie} />
+                                        </Link>
                                     </CarouselItem>
                                 ))
                             )}
@@ -118,7 +121,9 @@ const HomePage = () => {
                                 ))
                             ) : (
                                 popularMovies.slice(0, limitPopularMovies).map((movie) => (
-                                    <MovieCard key={movie.id} movie={movie} />
+                                    <Link to={`/movie/${movie.id}`}>
+                                        <MovieCard key={movie.id} movie={movie} />
+                                    </Link>
                                 ))
                             )}
                         </div>

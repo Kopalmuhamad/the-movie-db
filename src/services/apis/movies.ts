@@ -86,3 +86,13 @@ export const searchMovie = async (
     throw error;
   }
 };
+
+
+export const fetchMovieById = async (id: string | number | undefined) => {
+  try {
+    const response = await axiosInstance.get(`/movie/${id}`)
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}

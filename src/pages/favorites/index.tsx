@@ -5,6 +5,7 @@ import MovieCard from '@/components/moleculs/movie-card';
 import { IMovie, IUser } from '@/services/apis/interface';
 import toast from 'react-hot-toast';
 import { Skeleton } from '@/components/atom/skeleton';
+import { Link } from 'react-router-dom';
 
 const FavoritePage = () => {
     const [account, setAccount] = useState<IUser | null>(null);
@@ -64,12 +65,14 @@ const FavoritePage = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {favoriteMovies.length > 0 ? (
                         favoriteMovies.map((movie) => (
-                            <MovieCard
-                                key={movie.id}
-                                movie={movie}
-                                accountId={account?.id}
-                                sessionId={sessionId || ''}
-                            />
+                            <Link to={`/movie/${movie.id}`}>
+                                <MovieCard
+                                    key={movie.id}
+                                    movie={movie}
+                                    accountId={account?.id}
+                                    sessionId={sessionId || ''}
+                                />
+                            </Link>
                         ))
                     ) : (
                         <p>You don't have any favorite movies yet.</p>

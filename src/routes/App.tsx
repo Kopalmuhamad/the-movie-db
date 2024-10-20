@@ -5,6 +5,7 @@ import { ThemeProvider } from '../providers/theme-provider'
 import LoginPage from '../pages/login'
 import FavoritePage from '../pages/favorites'
 import ProtectedRoute from './protected-route'
+import MovieDetail from '@/pages/detail-movie'
 
 const App = () => {
 
@@ -26,6 +27,14 @@ const App = () => {
       element: (
         <ProtectedRoute>
           <FavoritePage />
+        </ProtectedRoute>
+      )
+    },
+    {
+      path: '/movie/:movieId',
+      element: (
+        <ProtectedRoute>
+          <MovieDetail />
         </ProtectedRoute>
       )
     }

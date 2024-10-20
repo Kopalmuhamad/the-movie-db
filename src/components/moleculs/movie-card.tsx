@@ -11,14 +11,14 @@ import { useNavigate } from 'react-router-dom';
 interface MovieCardProps {
     movie: IMovie;
     accountId?: string | number;
-    sessionId?: string;  // Tambahkan sessionId
+    sessionId?: string;
     onAddToWatchlist?: () => void;
 }
 
 const MovieCard = ({
     movie,
     accountId,
-    sessionId,  // Tambahkan sessionId
+    sessionId,
     onAddToWatchlist,
 }: MovieCardProps) => {
     const { toast } = useToast();
