@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/atom/card";
 import MainLayout from "@/components/layout/main-layout";
 import { IDetailMovie } from "@/services/apis/interface";
 import { fetchMovieById } from "@/services/apis/movies";
-import { ArrowLeftIcon, Calendar, Clock, Star, ThumbsUp, User } from "lucide-react";
+import { ArrowLeftIcon, Calendar, Star, ThumbsUp, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/atom/skeleton";
 import { useParams, useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ export default function MovieDetail() {
         getDetailMovie();
     }, []);
 
-    
+
 
     // Show loading skeletons while data is being fetched
     if (!detailMovie) {
